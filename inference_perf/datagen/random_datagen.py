@@ -104,8 +104,14 @@ class RandomDataGenerator(DataGenerator):
                     random_token_ids_list = []
                 else:
                     random_token_ids = np.random.randint(0, self.vocab_size, size=self.input_lengths[i], dtype=np.int64)
+                    # Ensure the first token is fully random each time
+                    if len(random_token_ids) > 0:
+                        random_token_ids[0] = np.random.randint(0, self.vocab_size)
+                    # Shuffle the first few tokens to avoid overlap
+                    if len(random_token_ids) >= 3:
+                        np.random.shuffle(random_token_ids[:3])
                     random_token_ids_list = random_token_ids.tolist()
-                prompt_text = self.tokenizer.get_tokenizer().decode(random_token_ids_list)
+                prompt_text = self.tokenizer.get_tokenizer().decode(random_token_ids_list, clean_up_tokenization_spaces=False)
 
                 yield CompletionAPIData(
                     prompt=prompt_text,
