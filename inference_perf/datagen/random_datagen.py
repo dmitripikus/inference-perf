@@ -19,7 +19,7 @@ from .base import DataGenerator
 from typing import Generator, List
 from inference_perf.config import APIType, APIConfig, DataConfig
 import uuid
-import logging
+
 
 
 # Random data generator generates random tokens from the model's
@@ -96,9 +96,13 @@ class RandomDataGenerator(DataGenerator):
     def get_data(self) -> Generator[InferenceAPIData, None, None]:
         i = 0
 
-        logging.basicConfig(level=logging.INFO)
+        import logging
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(processName)s - %(levelname)s - %(message)s",
+        )
         logger = logging.getLogger(__name__)
-
+        logger.info(">get_data()!!!!!")
         while True:
             if self.tokenizer is None:
                 raise ValueError("Tokenizer is required for RandomDataGenerator")
