@@ -49,6 +49,7 @@ from inference_perf.utils import CustomTokenizer, ReportFile
 from inference_perf.logger import setup_logging
 import asyncio
 import time
+import logging
 
 
 class InferencePerfRunner:
@@ -197,6 +198,7 @@ def main_cli() -> None:
         elif config.data.type == DataGenType.Synthetic:
             datagen = SyntheticDataGenerator(config.api, config.data, tokenizer)
         elif config.data.type == DataGenType.Random:
+            logging.info("datagen = RandomDataGenerator!!!")
             datagen = RandomDataGenerator(config.api, config.data, tokenizer)
         elif config.data.type == DataGenType.SharedPrefix:
             datagen = SharedPrefixDataGenerator(config.api, config.data, tokenizer)
@@ -205,6 +207,8 @@ def main_cli() -> None:
     else:
         raise Exception("data config missing")
 
+    logging.info(f"datagen type: {type(datagen)}")
+    
     # Define LoadGenerator
     if config.load:
         if (
