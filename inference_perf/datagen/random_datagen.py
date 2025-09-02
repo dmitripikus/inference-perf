@@ -19,7 +19,9 @@ from .base import DataGenerator
 from typing import Generator, List
 from inference_perf.config import APIType, APIConfig, DataConfig
 import uuid
+import logging
 
+logger = logging.getLogger(__name__)
 
 # Random data generator generates random tokens from the model's
 # vocabulary for the desired input and output distribution.
@@ -112,7 +114,7 @@ class RandomDataGenerator(DataGenerator):
                     if len(random_token_ids) >= 3:
                         np.random.shuffle(random_token_ids[:3])
                     if len(random_token_ids) >= 10:
-                        print(f"Request {i} first 10 tokens:", random_token_ids[:10])    
+                        logger.info(f"Request {i} first 10 tokens:", random_token_ids[:10])    
                     random_token_ids_list = random_token_ids.tolist()
                 prompt_text = self.tokenizer.get_tokenizer().decode(random_token_ids_list, clean_up_tokenization_spaces=False)
                 unique_id = str(uuid.uuid4())
