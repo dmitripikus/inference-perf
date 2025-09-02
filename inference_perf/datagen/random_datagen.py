@@ -18,6 +18,7 @@ from inference_perf.utils.distribution import generate_distribution
 from .base import DataGenerator
 from typing import Generator, List
 from inference_perf.config import APIType, APIConfig, DataConfig
+import uuid
 
 
 # Random data generator generates random tokens from the model's
@@ -110,9 +111,12 @@ class RandomDataGenerator(DataGenerator):
                     # Shuffle the first few tokens to avoid overlap
                     if len(random_token_ids) >= 3:
                         np.random.shuffle(random_token_ids[:3])
+                    if len(random_token_ids) >= 10:
+                        print(f"Request {i} first 10 tokens:", random_token_ids[:10])    
                     random_token_ids_list = random_token_ids.tolist()
                 prompt_text = self.tokenizer.get_tokenizer().decode(random_token_ids_list, clean_up_tokenization_spaces=False)
-
+                unique_id = str(uuid.uuid4())
+                prompt_text = f"{unique_id}{prompt_text}"
                 yield CompletionAPIData(
                     prompt=prompt_text,
                     max_tokens=self.output_lengths[i],
