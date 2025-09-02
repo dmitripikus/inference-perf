@@ -21,8 +21,6 @@ from inference_perf.config import APIType, APIConfig, DataConfig
 import uuid
 import logging
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # Random data generator generates random tokens from the model's
 # vocabulary for the desired input and output distribution.
@@ -97,6 +95,9 @@ class RandomDataGenerator(DataGenerator):
 
     def get_data(self) -> Generator[InferenceAPIData, None, None]:
         i = 0
+
+        logging.basicConfig(level=logging.INFO)
+        logger = logging.getLogger(__name__)
 
         while True:
             if self.tokenizer is None:
