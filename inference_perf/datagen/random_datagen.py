@@ -21,6 +21,7 @@ from inference_perf.config import APIType, APIConfig, DataConfig
 import uuid
 import logging
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Random data generator generates random tokens from the model's
