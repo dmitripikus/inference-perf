@@ -97,11 +97,7 @@ class RandomDataGenerator(DataGenerator):
         i = 0
 
         import logging
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(processName)s - %(levelname)s - %(message)s",
-        )
-        logger = logging.getLogger(__name__)
+        logger = logging.getLogger(__name__).setLevel(logging.DEBUG)
         logger.info(">get_data()!!!!!")
         while True:
             if self.tokenizer is None:
