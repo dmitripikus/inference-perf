@@ -141,7 +141,7 @@ class LoadGenerator:
             self.workers[-1].start()
 
         for stage_id, stage in enumerate(self.stages):
-            logger.info("Stage %d - run started", stage_id)
+            logger.info("Stage_mp_run %d - run started", stage_id)
             timer = self.get_timer(stage.rate, stage.duration)
 
             # Allow generation a second to begin populating the queue so the workers
@@ -202,7 +202,7 @@ class LoadGenerator:
             start_time_epoch = time.time()
             start_time = time.perf_counter()
             end_time = start_time + stage.duration
-            logger.info("Stage %d - run started", stage_id)
+            logger.info("Stage_run %d - run started", stage_id)
             async with TaskGroup() as tg:
                 time_generator = timer.start_timer(start_time)
                 for _, (data, time_index) in enumerate(zip(self.datagen.get_data(), time_generator, strict=True)):
